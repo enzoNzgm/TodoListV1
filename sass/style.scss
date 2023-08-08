@@ -7,10 +7,13 @@
 body {
     background: #4285f4;
     font-family: 'Roboto', sans-serif;
-    height: 100vh;
+}
+
+.todoList {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 98vh;
 }
 
 .todoList__card {
@@ -71,6 +74,12 @@ body {
             background: orange;
         }
     }
+}
+
+.utilsation__txt {
+    color: #fff;
+    text-align: end;
+    margin-right: 5px;
 }
 
 @keyframes anime {
