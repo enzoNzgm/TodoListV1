@@ -5,7 +5,8 @@
 }
 
 body {
-    background: #4285f4;
+    background: rgb(148, 71, 255);
+    background: radial-gradient(circle, rgba(148, 71, 255, 1) 0%, rgba(66, 133, 244, 1) 50%);
     font-family: 'Roboto', sans-serif;
 }
 
@@ -17,7 +18,7 @@ body {
 }
 
 .todoList__card {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.4);
     border-radius: 5px;
     width: 50%;
     min-width: 300px;
@@ -43,13 +44,23 @@ body {
             border-radius: 4px 0 0 4px;
         }
 
+        #todoTxt::placeholder {
+            padding-left: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            opacity: .8;
+            font-family: 'Roboto', sans-serif;
+        }
+
+
         #todoList__btn {
             width: 10%;
             height: 40px;
             border-radius: 0 4px 4px 0;
             border: 1px solid #b3b2b2;
-            background: #4285f4;
+            background: #699df0;
             font-size: 1.8rem;
+            color: #fff
         }
     }
 
@@ -85,5 +96,12 @@ body {
 @keyframes anime {
     from {
         transform: translateY(50px);
+    }
+}
+
+@media screen and (max-width : 800px) {
+    body {
+        background: rgb(148, 71, 255);
+        background: radial-gradient(circle, rgba(148, 71, 255, 1) 42%, rgba(66, 133, 244, 1) 100%);
     }
 }
