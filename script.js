@@ -1,41 +1,52 @@
-let todoTxt = document.getElementById('todoTxt')
-let todoBtn = document.getElementById('todoList__btn')
-let todoContainer = document.querySelector('.todoList__add')
+document.addEventListener('DOMContentLoaded', function () {
+    const todoTxt = document.getElementById('todoTxt');
+    const todoBtn = document.getElementById('todoList__btn');
+    const todoContainer = document.querySelector('.todoList__add');
 
+    // Charger les tâches depuis le stockage local
+    function loadTasksFromStorage() {
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.forEach(task => {
+            createTask(task);
+        });
+    }
 
-todoBtn.onclick = function () {
-    //vérifier que le champ n'est pas vide
-    if (todoTxt.value !== "") {
-        const paragraph = document.createElement('p')
+    // Enregistrer les tâches dans le stockage local
+    function saveTasksToStorage() {
+        const tasks = Array.from(todoContainer.querySelectorAll('p')).map(paragraph => paragraph.innerText);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
 
+    // Créer une tâche et ajouter des gestionnaires d'événements
+    function createTask(text) {
+        const paragraph = document.createElement('p');
+        paragraph.innerText = text;
 
-        //valorisé ce paragraphe avec le contenu de l'input
-        paragraph.innerText = todoTxt.value
+        paragraph.classList.add('newTodo__style');
 
-        //inserer le paragraphe dans la todoList
-        todoContainer.appendChild(paragraph)
-
-        //ajout style au paragraphe 
-        paragraph.classList.add('newTodo__style')
-
-        //suprimer champs de saisie apres ajout
-        todoTxt.value = ""
-
-        //barrer paragraphe au click 
         paragraph.addEventListener('click', () => {
-            console.log('barré la case')
-            paragraph.classList.add('newTodo__style--barre')
-        })
-
-        //suprimer seulement le paragraphe double cliqué
-        const paragraphs = document.querySelectorAll('.todoList__add p');
-        paragraphs.forEach(paragraph => {
-
-            paragraph.addEventListener('dblclick', () => {
-                paragraph.remove(); // Supprime le paragraphe double-cliqué
-            });
+            paragraph.classList.toggle('newTodo__style--barre');
+            saveTasksToStorage();
         });
 
+        paragraph.addEventListener('dblclick', () => {
+            paragraph.remove();
+            saveTasksToStorage();
+        });
 
+        todoContainer.appendChild(paragraph);
     }
-}
+
+    // Ajouter une tâche à la liste
+    todoBtn.addEventListener('click', function () {
+        const task = todoTxt.value.trim();
+        if (task !== '') {
+            createTask(task);
+            saveTasksToStorage();
+            todoTxt.value = '';
+        }
+    });
+
+    // Charger les tâches lors du chargement de la page
+    loadTasksFromStorage();
+});
